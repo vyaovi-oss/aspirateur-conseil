@@ -1,0 +1,162 @@
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: content/articles
+    filename: "{fields.slug}.md"
+    view:
+      fields: [titre, categorie, date, brouillon]
+      primary: titre
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: titre
+        label: Titre (affiché en haut de l'article)
+        type: string
+        required: true
+      - name: titre_seo
+        label: Titre SEO (onglet du navigateur et Google, 60 caractères max)
+        type: string
+      - name: slug
+        label: Adresse de la page (minuscules et tirets, sans accents)
+        type: string
+        required: true
+      - name: description
+        label: Description pour Google (150 à 160 caractères)
+        type: text
+        required: true
+      - name: categorie
+        label: Catégorie
+        type: select
+        required: true
+        options:
+          values:
+            - value: aspirateur-balai
+              label: Aspirateurs balais
+            - value: aspirateur-robot
+              label: Aspirateurs robots
+            - value: aspirateur-traineau
+              label: Aspirateurs traîneaux
+            - value: aspirateur-a-main
+              label: Aspirateurs à main
+            - value: eau-et-poussiere
+              label: Eau et poussière
+            - value: guides-entretien
+              label: Guides et entretien
+      - name: date
+        label: Date de publication
+        type: date
+        required: true
+      - name: mise_a_jour
+        label: Date de mise à jour (facultatif)
+        type: date
+      - name: brouillon
+        label: Brouillon (cocher pour ne pas publier)
+        type: boolean
+        default: false
+      - name: image_url
+        label: Image de couverture (lien Unsplash)
+        type: string
+      - name: image_credit
+        label: Crédit de l'image (ex. Photo de Prénom Nom sur Unsplash)
+        type: string
+      - name: produits
+        label: Produits recommandés
+        type: object
+        list: true
+        fields:
+          - name: nom
+            label: Nom exact du produit (le lien Amazon est créé tout seul)
+            type: string
+            required: true
+          - name: asin
+            label: ASIN Amazon (facultatif, 10 caractères)
+            type: string
+          - name: badge
+            label: Badge (ex. Meilleur choix, Meilleur prix)
+            type: string
+          - name: resume
+            label: Résumé en 2 ou 3 phrases
+            type: text
+          - name: points_forts
+            label: Points forts
+            type: string
+            list: true
+          - name: points_faibles
+            label: Points faibles
+            type: string
+            list: true
+          - name: pour_qui
+            label: Pour qui ?
+            type: string
+      - name: faq
+        label: Questions fréquentes (FAQ)
+        type: object
+        list: true
+        fields:
+          - name: question
+            label: Question
+            type: string
+            required: true
+          - name: reponse
+            label: Réponse
+            type: text
+            required: true
+      - name: body
+        label: Contenu de l'article
+        type: rich-text
+
+  - name: pages
+    label: Pages (mentions légales, contact…)
+    type: collection
+    path: content/pages
+    filename: "{fields.slug}.md"
+    view:
+      fields: [titre]
+      primary: titre
+    fields:
+      - name: titre
+        label: Titre
+        type: string
+        required: true
+      - name: slug
+        label: Adresse de la page
+        type: string
+        required: true
+      - name: description
+        label: Description pour Google
+        type: text
+      - name: body
+        label: Contenu
+        type: rich-text
+
+  - name: reglages
+    label: Réglages du site
+    type: file
+    path: config.yaml
+    format: yaml
+    fields:
+      - name: nom_site
+        label: Nom du site
+        type: string
+      - name: url
+        label: Adresse du site
+        type: string
+      - name: slogan
+        label: Slogan
+        type: string
+      - name: description
+        label: Description du site
+        type: text
+      - name: langue
+        label: Langue
+        type: string
+      - name: auteur
+        label: Auteur
+        type: string
+      - name: email
+        label: E-mail de contact
+        type: string
+      - name: amazon_tag
+        label: Identifiant de suivi
