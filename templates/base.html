@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ site.langue }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titre %}{{ site.nom_site }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+  <link rel="canonical" href="{{ site.url }}{{ page_url }}">
+  {% block robots %}{% endblock %}
+  <meta property="og:site_name" content="{{ site.nom_site }}">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="{{ self.titre() }}">
+  <meta property="og:description" content="{{ self.description() }}">
+  <meta property="og:url" content="{{ site.url }}{{ page_url }}">
+  {% block og %}<meta property="og:type" content="website">{% endblock %}
+  <meta name="twitter:card" content="summary_large_image">
+  {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
+  {% if site.pinterest_verification %}<meta name="p:domain_verify" content="{{ site.pinterest_verification }}">{% endif %}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="entete">
+    <div class="conteneur entete-in">
+      <a class="logo" href="/">
+        <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0f766e"/><path d="M38 12v30" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M20 44h26a4 4 0 0 1 4 4v2H16v-2a4 4 0 0 1 4-4z" fill="#fff"/><circle cx="24" cy="54" r="3" fill="#99f6e4"/><circle cx="44" cy="54" r="3" fill="#99f6e4"/></svg>
+        <span>Aspirateur<strong>Conseil</strong></span>
+      </a>
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Ouvrir le menu">
+      <label for="menu-toggle" class="menu-bouton" aria-hidden="true"><span></span><span></span><span></span></label>
+      <nav class="menu" aria-label="Menu principal">
+        {% for c in site.categories %}
+        <a href="/categorie/{{ c.slug }}/"{% if page_url == '/categorie/' ~ c.slug ~ '/' %} aria-current="page"{% endif %}>{{ c.nom }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% block contenu %}{% endblock %}
+  </main>
+
+  <footer class="pied">
+    <div class="conteneur pied-in">
+      <div>
+        <p class="pied-logo">Aspirateur<strong>Conseil</strong></p>
+        <p>{{ site.slogan }}.</p>
+        <p class="pied-affiliation">En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises.</p>
+      </div>
+      <div>
+        <p class="pied-titre">Catégories</p>
+        <ul>
+          {% for c in site.categories %}<li><a href="/categorie/{{ c.slug }}/">{{ c.nom }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      <div>
+        <p class="pied-titre">Informations</p>
+        <ul>
+          <li><a href="/a-propos/">À propos</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+          <li><a href="/confidentialite/">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="conteneur copyright">© {{ annee }} {{ site.nom_site }}</p>
+  </footer>
+
+  {% if site.cloudflare_analytics_token %}
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.cloudflare_analytics_token }}"}'></script>
+  {% endif %}
+</body>
+</html>

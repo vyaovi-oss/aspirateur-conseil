@@ -1,0 +1,39 @@
+# Réglages généraux du site aspirateur-conseil.com
+# Mets des guillemets autour des textes qui contiennent « : »
+
+nom_site: "Aspirateur Conseil"
+url: "https://aspirateur-conseil.com"
+slogan: "Guides d'achat et conseils pour choisir le bon aspirateur"
+description: "Guides d'achat, comparatifs et conseils d'entretien pour bien choisir son aspirateur balai, robot, traîneau ou à main."
+langue: "fr"
+auteur: "Victor Yaovi"
+email: "contact@aspirateur-conseil.com"
+
+# Identifiant de suivi Amazon pour CE site
+amazon_tag: "aspiconseil-21"
+amazon_domaine: "www.amazon.fr"
+
+# À remplir plus tard (laisser vide pour l'instant)
+cloudflare_analytics_token: ""
+google_site_verification: ""
+pinterest_verification: ""
+
+categories:
+  - slug: "aspirateur-balai"
+    nom: "Aspirateurs balais"
+    description: "Nos guides pour choisir un aspirateur balai sans fil : autonomie, puissance, poids et meilleurs modèles."
+  - slug: "aspirateur-robot"
+    nom: "Aspirateurs robots"
+    description: "Aspirateurs robots et robots laveurs : comment choisir, quelles fonctions sont utiles, quels modèles privilégier."
+  - slug: "aspirateur-traineau"
+    nom: "Aspirateurs traîneaux"
+    description: "Aspirateurs traîneaux avec ou sans sac : nos guides pour un nettoyage puissant de toute la maison."
+  - slug: "aspirateur-a-main"
+    nom: "Aspirateurs à main"
+    description: "Petits aspirateurs à main pour la voiture, le canapé et les miettes du quotidien."
+  - slug: "eau-et-poussiere"
+    nom: "Eau et poussière"
+    description: "Aspirateurs eau et poussière et nettoyeurs de sols pour l'atelier, le garage et les gros chantiers."
+  - slug: "guides-entretien"
+    nom: "Guides et entretien"
+    description: "Conseils pratiques pour comprendre, entretenir et faire durer son aspirateur."

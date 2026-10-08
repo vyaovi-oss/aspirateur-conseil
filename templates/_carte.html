@@ -1,0 +1,10 @@
+<article class="carte-article">
+  <a href="{{ a.url }}" class="carte-image">
+    {% if a.image_url %}<img src="{{ a.image_url }}" alt="{{ a.titre }}" loading="lazy" width="600" height="338">{% else %}<span class="image-vide" aria-hidden="true"></span>{% endif %}
+  </a>
+  <div class="carte-texte">
+    {% if a.categorie %}<a class="etiquette" href="/categorie/{{ a.categorie.slug }}/">{{ a.categorie.nom }}</a>{% endif %}
+    <h3><a href="{{ a.url }}">{{ a.titre }}</a></h3>
+    <p>{{ a.description }}</p>
+  </div>
+</article>

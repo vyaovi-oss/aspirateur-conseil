@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titre %}{{ p.titre_seo }} – {{ site.nom_site }}{% endblock %}
+{% block description %}{{ p.description or site.description }}{% endblock %}
+{% block robots %}{% if p.noindex %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+
+{% block contenu %}
+<article class="conteneur-article">
+  <h1>{{ p.titre }}</h1>
+  <div class="texte">
+    {{ p.contenu|safe }}
+  </div>
+</article>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titre %}Page introuvable – {{ site.nom_site }}{% endblock %}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block contenu %}
+<section class="hero hero-petit">
+  <div class="conteneur">
+    <h1>Oups, cette page n'existe pas</h1>
+    <p>Elle a peut-être été déplacée. Retournez à l'<a href="/">accueil</a> ou choisissez une catégorie dans le menu.</p>
+  </div>
+</section>
+{% if articles %}
+<section class="conteneur bloc">
+  <h2 class="titre-section">Nos derniers guides</h2>
+  <div class="grille-articles">
+    {% for a in articles %}{% include "_carte.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

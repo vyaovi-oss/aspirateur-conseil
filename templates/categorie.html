@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titre %}{{ c.nom }} : guides d'achat et conseils – {{ site.nom_site }}{% endblock %}
+{% block description %}{{ c.description }}{% endblock %}
+{% block robots %}{% if not articles %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+
+{% block contenu %}
+<section class="hero hero-petit">
+  <div class="conteneur">
+    <nav class="fil" aria-label="Fil d'Ariane"><a href="/">Accueil</a></nav>
+    <h1>{{ c.nom }}</h1>
+    <p>{{ c.description }}</p>
+  </div>
+</section>
+
+<section class="conteneur bloc">
+  {% if articles %}
+  <div class="grille-articles">
+    {% for a in articles %}{% include "_carte.html" %}{% endfor %}
+  </div>
+  {% else %}
+  <p class="vide">Les premiers guides de cette catégorie arrivent très bientôt.</p>
+  {% endif %}
+</section>
+{% endblock %}

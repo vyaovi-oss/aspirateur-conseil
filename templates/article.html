@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block titre %}{{ a.titre_seo }}{% endblock %}
+{% block description %}{{ a.description }}{% endblock %}
+{% block og %}
+  <meta property="og:type" content="article">
+  {% if a.image_url %}<meta property="og:image" content="{{ a.image_url }}">{% endif %}
+  <meta property="article:published_time" content="{{ a.date.isoformat() }}">
+  <meta property="article:modified_time" content="{{ a.mise_a_jour.isoformat() }}">
+{% endblock %}
+{% block head %}
+  {% for bloc in jsonld %}<script type="application/ld+json">{{ bloc|safe }}</script>
+  {% endfor %}
+{% endblock %}
+
+{% block contenu %}
+<article class="conteneur-article">
+  <nav class="fil" aria-label="Fil d'Ariane">
+    <a href="/">Accueil</a>
+    {% if a.categorie %}<span>›</span><a href="/categorie/{{ a.categorie.slug }}/">{{ a.categorie.nom }}</a>{% endif %}
+  </nav>
+
+  <h1>{{ a.titre }}</h1>
+  <p class="infos">
+    Par {{ site.auteur }} · Mis à jour le <time datetime="{{ a.mise_a_jour.isoformat() }}">{{ a.mise_a_jour_fr }}</time> · {{ a.temps_lecture }} min de lecture
+  </p>
+
+  <p class="mention-affiliation">Cet article contient des liens affiliés Amazon : si vous achetez via ces liens, je touche une petite commission, sans surcoût pour vous.</p>
+
+  {% if a.image_url %}
+  <figure class="couverture">
+    <img src="{{ a.image_url }}" alt="{{ a.titre }}" width="1200" height="675" fetchpriority="high">
+    {% if a.image_credit %}<figcaption>{{ a.image_credit }}</figcaption>{% endif %}
+  </figure>
+  {% endif %}
+
+  {% if a.produits %}
+  <section class="en-bref" aria-labelledby="en-bref-titre">
+    <h2 id="en-bref-titre">Notre sélection en bref</h2>
+    <ol>
+      {% for p in a.produits %}
+      <li>
+        <span>{% if p.badge %}<b class="badge">{{ p.badge }}</b>{% endif %}<a href="#produit-{{ loop.index }}">{{ p.nom }}</a></span>
+        <a class="bouton bouton-petit" href="{{ p.lien }}" rel="sponsored nofollow noopener" target="_blank">Voir le prix</a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+
+  {% if a.sommaire|length > 2 %}
+  <details class="sommaire" open>
+    <summary>Sommaire</summary>
+    <ol>
+      {% if a.produits and not a.contenu_avant %}<li><a href="#selection">Notre sélection détaillée</a></li>{% endif %}
+      {% for t in a.sommaire %}<li><a href="#{{ t.id }}">{{ t.titre }}</a></li>{% endfor %}
+      {% if a.faq %}<li><a href="#faq">Questions fréquentes</a></li>{% endif %}
+    </ol>
+  </details>
+  {% endif %}
+
+  <div class="texte">
+    {{ a.contenu_avant|safe }}
+
+    {% if a.produits %}
+    <section id="selection" class="selection">
+      {% if not a.contenu_avant %}<h2>Notre sélection détaillée</h2>{% endif %}
+      {% for p in a.produits %}
+      <div class="fiche" id="produit-{{ loop.index }}">
+        <div class="fiche-entete">
+          <span class="fiche-numero">{{ loop.index }}</span>
+          <div>
+            {% if p.badge %}<b class="badge">{{ p.badge }}</b>{% endif %}
+            <h3>{{ p.nom }}</h3>
+          </div>
+        </div>
+        {% if p.resume %}<p>{{ p.resume }}</p>{% endif %}
+        {% if p.points_forts or p.points_faibles %}
+        <div class="fiche-points">
+          {% if p.points_forts %}
+          <div class="points plus">
+            <p class="points-titre">Points forts</p>
+            <ul>{% for x in p.points_forts %}<li>{{ x }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+          {% if p.points_faibles %}
+          <div class="points moins">
+            <p class="points-titre">Points faibles</p>
+            <ul>{% for x in p.points_faibles %}<li>{{ x }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if p.pour_qui %}<p class="pour-qui"><strong>Pour qui ?</strong> {{ p.pour_qui }}</p>{% endif %}
+        <a class="bouton" href="{{ p.lien }}" rel="sponsored nofollow noopener" target="_blank">Voir le prix sur Amazon</a>
+      </div>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    {{ a.contenu_apres|safe }}
+
+    {% if a.faq %}
+    <section class="faq" id="faq">
+      <h2>Questions fréquentes</h2>
+      {% for q in a.faq %}
+      <details>
+        <summary>{{ q.question }}</summary>
+        <div>{{ q.reponse|safe }}</div>
+      </details>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    <aside class="methode">
+      <strong>Comment nous choisissons ?</strong>
+      Notre avis est basé sur les caractéristiques des produits (puissance, autonomie, filtration, accessoires…) et sur l'analyse des avis d'acheteurs. Les prix et la disponibilité sur Amazon peuvent changer.
+    </aside>
+  </div>
+</article>
+
+{% if similaires %}
+<section class="conteneur bloc">
+  <h2 class="titre-section">À lire aussi</h2>
+  <div class="grille-articles">
+    {% for a in similaires %}{% include "_carte.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titre %}{{ site.nom_site }} – {{ site.slogan }}{% endblock %}
+
+{% block contenu %}
+<section class="hero">
+  <div class="conteneur">
+    <h1>Trouvez l'aspirateur qui vous convient vraiment</h1>
+    <p>Balai sans fil, robot, traîneau ou aspirateur à main : nos guides d'achat comparent les caractéristiques et les avis d'acheteurs pour vous aider à choisir sans vous tromper.</p>
+  </div>
+</section>
+
+<section class="conteneur bloc">
+  <h2 class="titre-section">Choisir par type d'aspirateur</h2>
+  <div class="grille-categories">
+    {% for c in site.categories %}
+    <a class="carte-categorie" href="/categorie/{{ c.slug }}/">
+      <strong>{{ c.nom }}</strong>
+      <span>{{ c.description }}</span>
+      <em>{% if c.articles %}{{ c.articles|length }} guide{% if c.articles|length > 1 %}s{% endif %}{% else %}Bientôt{% endif %} →</em>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% if articles %}
+<section class="conteneur bloc">
+  <h2 class="titre-section">Derniers guides</h2>
+  <div class="grille-articles">
+    {% for a in articles[:12] %}{% include "_carte.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}
